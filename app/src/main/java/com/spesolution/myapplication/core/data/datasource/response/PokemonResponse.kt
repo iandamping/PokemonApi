@@ -12,4 +12,12 @@ data class PokemonResponse(
     @SerializedName("name") val pokemonName: String,
     @SerializedName("weight") val pokemonWeight: Int,
     @SerializedName("height") val pokemonHeight: Int,
+    @SerializedName("sprites") val pokemonImage:PokemonSprites
 )
+
+data class PokemonSprites(@SerializedName("other") val sprites: PokemonSpritesOther)
+
+data class PokemonSpritesOther(@SerializedName("official-artwork") val other: PokemonOfficialArtwork)
+
+data class PokemonOfficialArtwork(@SerializedName("front_default") val image: String)
+

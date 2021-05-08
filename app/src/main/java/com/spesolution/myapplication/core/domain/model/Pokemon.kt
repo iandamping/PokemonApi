@@ -9,4 +9,5 @@ data class Pokemon(
     val pokemonName:String,
     val pokemonWeight:Int,
     val pokemonHeight:Int,
+    val pokemonImage:String
 )

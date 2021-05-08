@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
  */
 interface PokemonRemoteDataSource {
 
-    suspend fun getMainPokemon(): List<PokemonResultsResponse>
+    suspend fun getMainPokemon(): DataSourceResult<List<PokemonResultsResponse>>
 
     suspend fun getDetailPokemon(url: String): PokemonResponse
 }

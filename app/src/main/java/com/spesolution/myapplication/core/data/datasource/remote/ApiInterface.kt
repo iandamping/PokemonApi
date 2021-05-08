@@ -15,7 +15,7 @@ import retrofit2.http.Url
 interface ApiInterface {
 
     @GET(GET_POKEMON)
-    suspend fun getMainPokemon(): PokemonMainResponse
+    suspend fun getMainPokemon(): Response<PokemonMainResponse>
 
     @GET
     suspend fun getPokemon(@Url url: String): PokemonResponse

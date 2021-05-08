@@ -4,13 +4,14 @@ import com.spesolution.myapplication.core.data.model.Results
 import retrofit2.Response
 import java.io.IOException
 import java.net.SocketTimeoutException
+import javax.inject.Inject
 
 /**
  * Created by Ian Damping on 07,May,2021
  * Github https://github.com/iandamping
  * Indonesia.
  */
-class BaseSourceImpl : BaseSource {
+class BaseSourceImpl @Inject constructor(): BaseSource {
     override suspend fun <T> oneShotCalls(call: suspend () -> Response<T>): Results<T> {
         try {
             val response = call.invoke()
