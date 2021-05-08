@@ -28,6 +28,7 @@
 
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/tvItemPokemonName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,6 +42,40 @@
             app:layout_constraintBottom_toBottomOf="@+id/ivItemPokemonImage"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="Kota Yogyakarta, DIY" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivItemPokemonImage">
+
+            <ImageView
+                android:id="@+id/ivItemSmallPokemonImage1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/ivItemSmallPokemonImage2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/ivItemSmallPokemonImage3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/ivItemSmallPokemonImage4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

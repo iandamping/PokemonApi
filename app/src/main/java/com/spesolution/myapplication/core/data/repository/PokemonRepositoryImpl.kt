@@ -32,7 +32,11 @@ class PokemonRepositoryImpl @Inject constructor(private val remoteDataSource: Po
                             pokemonWeight = results.pokemonWeight,
                             pokemonHeight = results.pokemonHeight,
                             pokemonName = results.pokemonName,
-                            pokemonImage = results.pokemonImage.sprites.other.image
+                            pokemonImage = results.pokemonImage.sprites.other.image,
+                            pokemonSmallImage1 = results.pokemonImage.smallImage1,
+                            pokemonSmallImage2 = results.pokemonImage.smallImage2,
+                            pokemonSmallImage3 = results.pokemonImage.smallImage3,
+                            pokemonSmallImage4 = results.pokemonImage.smallImage4
                         )
                     }
                     if (data.isNullOrEmpty()) {

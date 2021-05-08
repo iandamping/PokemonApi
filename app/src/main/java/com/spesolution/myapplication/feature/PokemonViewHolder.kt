@@ -18,6 +18,10 @@ class PokemonViewHolder(
     fun bind(data: Pokemon) {
         with(binding) {
             imageHelper.loadWithGlide(ivItemPokemonImage, data.pokemonImage)
+            imageHelper.loadWithGlide(ivItemSmallPokemonImage1, data.pokemonSmallImage1)
+            imageHelper.loadWithGlide(ivItemSmallPokemonImage2, data.pokemonSmallImage3)
+            imageHelper.loadWithGlide(ivItemSmallPokemonImage3, data.pokemonSmallImage2)
+            imageHelper.loadWithGlide(ivItemSmallPokemonImage4, data.pokemonSmallImage4)
             tvItemPokemonName.text = data.pokemonName
         }
     }
