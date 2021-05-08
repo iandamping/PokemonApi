@@ -5,6 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.spesolution.myapplication.core.domain.model.Pokemon
 import com.spesolution.myapplication.databinding.ItemPokemonBinding
+import com.spesolution.myapplication.util.PokemonConstant.ONE_SKILL_MONS
 import com.spesolution.myapplication.util.PokemonConstant.ONE_TYPE_MONS
 import com.spesolution.myapplication.util.imageHelper.LoadImageHelper
 
@@ -33,12 +34,21 @@ class PokemonViewHolder(
             tvStatPoint2.text = data.pokemonStat2.point.toString()
             tvStatName3.text = data.pokemonStat3.name
             tvStatPoint3.text = data.pokemonStat3.point.toString()
+
             tvType0.text = data.pokemonType0
             if (data.pokemonType1 == ONE_TYPE_MONS){
                 llType1.visibility = View.GONE
             } else {
                 llType1.visibility = View.VISIBLE
                 tvType1.text = data.pokemonType1
+            }
+
+            tvAbility0.text = data.pokemonAbility1
+            if (data.pokemonAbility2 == ONE_SKILL_MONS){
+                llAbilities1.visibility = View.GONE
+            } else {
+                llAbilities1.visibility = View.VISIBLE
+                tvAbility1.text = data.pokemonAbility2
             }
 
 

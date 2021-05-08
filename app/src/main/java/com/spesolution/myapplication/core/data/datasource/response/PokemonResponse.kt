@@ -15,4 +15,5 @@ data class PokemonResponse(
     @SerializedName("sprites") val pokemonImage: PokemonSpritesResponse,
     @SerializedName("stats") val pokemonStats: List<PokemonBasicStatsResponse>,
     @SerializedName("types") val pokemonTypes: List<PokemonTypesResponse>,
+    @SerializedName("abilities") val pokemonAbilities: List<PokemonAbilitiesResponse>,
 )

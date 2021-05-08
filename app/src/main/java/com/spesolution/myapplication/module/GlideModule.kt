@@ -12,6 +12,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.android.scopes.ActivityScoped
+import javax.inject.Singleton
 
 /**
  * Created by Ian Damping on 08,May,2021
@@ -23,11 +25,13 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 object GlideModule {
 
     @Provides
+    @ActivityScoped
     fun provideRequestManager(@ApplicationContext context: Context): RequestManager {
         return Glide.with(context)
     }
 
     @Provides
+    @ActivityScoped
     fun provideRequestOptions(): RequestOptions {
         return RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
             .format(DecodeFormat.PREFER_RGB_565)

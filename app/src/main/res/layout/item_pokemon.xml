@@ -205,7 +205,7 @@
                         android:id="@+id/tvTypeName1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="type " />
+                        />
 
                     <TextView
                         android:id="@+id/tvType1"
@@ -214,6 +214,50 @@
                         android:gravity="end"
                         android:textStyle="bold"
                         tools:text="poison" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/llAbilites0"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvAbilityName0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ability  " />
+
+                    <TextView
+                        android:id="@+id/tvAbility0"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:textStyle="bold"
+                        tools:text="Grass" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/llAbilities1"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvAbilityName1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+
+                    <TextView
+                        android:id="@+id/tvAbility1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:textStyle="bold"
+                        tools:text="Grass" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
             </androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,9 +1,10 @@
 package com.spesolution.myapplication.core.domain.model
 
+import com.spesolution.myapplication.core.data.datasource.response.PokemonAbilitiesResponse
 import com.spesolution.myapplication.core.data.datasource.response.PokemonBasicStatsResponse
 import com.spesolution.myapplication.core.data.datasource.response.PokemonResponse
-import com.spesolution.myapplication.core.data.datasource.response.PokemonTypeSingleResponse
 import com.spesolution.myapplication.core.data.datasource.response.PokemonTypesResponse
+import com.spesolution.myapplication.util.PokemonConstant.ONE_SKILL_MONS
 import com.spesolution.myapplication.util.PokemonConstant.ONE_TYPE_MONS
 
 /**
@@ -25,15 +26,21 @@ fun PokemonResponse.mapToDomain(): Pokemon = Pokemon(
     pokemonStat2 = pokemonStats[2].mapToDomain(),
     pokemonStat3 = pokemonStats[5].mapToDomain(),
     pokemonType0 = pokemonTypes[0].type.typeName,
-    pokemonType1 = pokemonTypes.checkList(1,1),
-
-    )
+    pokemonType1 = pokemonTypes.checkTypeList(1, 1),
+    pokemonAbility1 = pokemonAbilities[0].abilities.abilityName,
+    pokemonAbility2 = pokemonAbilities.checkAbilitiesList(1, 1)
+)
 
 fun PokemonBasicStatsResponse.mapToDomain(): PokemonStat = PokemonStat(
     baseStat, statName.name
 )
 
-fun List<PokemonTypesResponse>.checkList(size: Int,position:Int): String =
+fun List<PokemonTypesResponse>.checkTypeList(size: Int, position: Int): String =
     if (this.size > size) {
         this[position].type.typeName
     } else ONE_TYPE_MONS
+
+fun List<PokemonAbilitiesResponse>.checkAbilitiesList(size: Int, position: Int): String =
+    if (this.size > size) {
+        this[position].abilities.abilityName
+    } else ONE_SKILL_MONS
