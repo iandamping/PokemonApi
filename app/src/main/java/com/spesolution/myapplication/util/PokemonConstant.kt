@@ -9,6 +9,7 @@ import com.spesolution.myapplication.core.domain.model.Pokemon
  * Indonesia.
  */
 object PokemonConstant {
+    const val ONE_TYPE_MONS = "ONE TYPE MONS"
     val listPokemonAdapterCallback = object : DiffUtil.ItemCallback<Pokemon>() {
         override fun areItemsTheSame(oldItem: Pokemon, newItem: Pokemon): Boolean {
             return oldItem.pokemonName == newItem.pokemonName

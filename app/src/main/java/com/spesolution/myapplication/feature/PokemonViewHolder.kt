@@ -1,8 +1,11 @@
 package com.spesolution.myapplication.feature
 
+import android.opengl.Visibility
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.spesolution.myapplication.core.domain.model.Pokemon
 import com.spesolution.myapplication.databinding.ItemPokemonBinding
+import com.spesolution.myapplication.util.PokemonConstant.ONE_TYPE_MONS
 import com.spesolution.myapplication.util.imageHelper.LoadImageHelper
 
 /**
@@ -22,7 +25,23 @@ class PokemonViewHolder(
             imageHelper.loadWithGlide(ivItemSmallPokemonImage2, data.pokemonSmallImage3)
             imageHelper.loadWithGlide(ivItemSmallPokemonImage3, data.pokemonSmallImage2)
             imageHelper.loadWithGlide(ivItemSmallPokemonImage4, data.pokemonSmallImage4)
-            tvItemPokemonName.text = data.pokemonName
+            tvStatName0.text = data.pokemonStat0.name
+            tvStatPoint0.text = data.pokemonStat0.point.toString()
+            tvStatName1.text = data.pokemonStat1.name
+            tvStatPoint1.text = data.pokemonStat1.point.toString()
+            tvStatName2.text = data.pokemonStat2.name
+            tvStatPoint2.text = data.pokemonStat2.point.toString()
+            tvStatName3.text = data.pokemonStat3.name
+            tvStatPoint3.text = data.pokemonStat3.point.toString()
+            tvType0.text = data.pokemonType0
+            if (data.pokemonType1 == ONE_TYPE_MONS){
+                llType1.visibility = View.GONE
+            } else {
+                llType1.visibility = View.VISIBLE
+                tvType1.text = data.pokemonType1
+            }
+
+
         }
     }
 }

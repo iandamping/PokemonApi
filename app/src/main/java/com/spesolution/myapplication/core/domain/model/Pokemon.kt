@@ -14,4 +14,10 @@ data class Pokemon(
     val pokemonSmallImage2:String,
     val pokemonSmallImage3:String,
     val pokemonSmallImage4:String,
+    val pokemonStat0:PokemonStat,
+    val pokemonStat1:PokemonStat,
+    val pokemonStat2:PokemonStat,
+    val pokemonStat3:PokemonStat,
+    val pokemonType0:String,
+    val pokemonType1:String,
 )
