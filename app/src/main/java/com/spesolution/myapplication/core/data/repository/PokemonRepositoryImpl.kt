@@ -1,8 +1,13 @@
 package com.spesolution.myapplication.core.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import com.spesolution.myapplication.core.data.datasource.PaginationPokemonRemoteDataSource
 import com.spesolution.myapplication.core.data.datasource.PokemonRemoteDataSource
 import com.spesolution.myapplication.core.data.datasource.remote.NetworkConstant.EMPTY_DATA
 import com.spesolution.myapplication.core.data.datasource.remote.NetworkConstant.NETWORK_ERROR
+import com.spesolution.myapplication.core.data.datasource.remote.NetworkConstant.NETWORK_PAGE_SIZE
 import com.spesolution.myapplication.core.data.model.DataSourceResult
 import com.spesolution.myapplication.core.domain.PokemonRepository
 import com.spesolution.myapplication.core.domain.model.DomainResult
@@ -18,7 +23,10 @@ import javax.inject.Inject
  * Github https://github.com/iandamping
  * Indonesia.
  */
-class PokemonRepositoryImpl @Inject constructor(private val remoteDataSource: PokemonRemoteDataSource) :
+class PokemonRepositoryImpl @Inject constructor(
+    private val pagingRemoteDataSource: PaginationPokemonRemoteDataSource,
+    private val remoteDataSource: PokemonRemoteDataSource
+) :
     PokemonRepository {
 
     override fun getPokemon(): Flow<DomainResult<List<Pokemon>>> {
@@ -41,6 +49,13 @@ class PokemonRepositoryImpl @Inject constructor(private val remoteDataSource: Po
             }
 
         }.onStart { emit(DomainResult.Loading) }
+    }
+
+    override fun getPagingPokemon(): Flow<PagingData<Pokemon>> {
+        return Pager(
+            config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
+            pagingSourceFactory = { pagingRemoteDataSource }
+        ).flow
     }
 }
 

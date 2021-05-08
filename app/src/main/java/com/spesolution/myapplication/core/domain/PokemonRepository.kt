@@ -1,5 +1,6 @@
 package com.spesolution.myapplication.core.domain
 
+import androidx.paging.PagingData
 import com.spesolution.myapplication.core.domain.model.DomainResult
 import com.spesolution.myapplication.core.domain.model.Pokemon
 import kotlinx.coroutines.flow.Flow
@@ -12,4 +13,6 @@ import kotlinx.coroutines.flow.Flow
 interface PokemonRepository {
 
     fun getPokemon(): Flow<DomainResult<List<Pokemon>>>
+
+    fun getPagingPokemon(): Flow<PagingData<Pokemon>>
 }

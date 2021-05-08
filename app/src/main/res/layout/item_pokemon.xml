@@ -183,7 +183,7 @@
                         android:id="@+id/tvTypeName0"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Type " />
+                        android:text="type " />
 
                     <TextView
                         android:id="@+id/tvType0"
@@ -205,7 +205,7 @@
                         android:id="@+id/tvTypeName1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Type " />
+                        android:text="type " />
 
                     <TextView
                         android:id="@+id/tvType1"

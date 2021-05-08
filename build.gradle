@@ -15,6 +15,7 @@ buildscript {
         navigationVer = '2.3.0'
         room_version="2.3.0"
         fragmentVersion = '1.2.0'
+        paging_version = "3.0.0"
         hilt_version = '2.35'
 
     }

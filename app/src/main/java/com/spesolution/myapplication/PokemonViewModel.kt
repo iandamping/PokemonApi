@@ -1,6 +1,8 @@
 package com.spesolution.myapplication
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.spesolution.myapplication.core.domain.PokemonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -14,4 +16,7 @@ import javax.inject.Inject
 class PokemonViewModel @Inject constructor(private val repo: PokemonRepository) : ViewModel() {
 
     val pokemon = repo.getPokemon()
+
+    val pokemonPaging =
+        repo.getPagingPokemon().cachedIn(viewModelScope)
 }
