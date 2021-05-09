@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import com.spesolution.myapplication.core.domain.model.Pokemon
+import com.spesolution.myapplication.databinding.ItemPaginationPokemonBinding
 import com.spesolution.myapplication.databinding.ItemPokemonBinding
 import com.spesolution.myapplication.feature.PokemonViewHolder
 import com.spesolution.myapplication.util.PokemonConstant
@@ -18,15 +19,15 @@ class PokemonPagingAdapter(
     private val listener: PokemonPagingAdapterListener,
     private val loadImageHelper: LoadImageHelper
 ) :
-    PagingDataAdapter<Pokemon, PokemonViewHolder>(PokemonConstant.listPokemonAdapterCallback) {
+    PagingDataAdapter<Pokemon, PokemonPagingViewHolder>(PokemonConstant.listPokemonAdapterCallback) {
 
     interface PokemonPagingAdapterListener {
         fun onClicked(data: Pokemon)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
-        return PokemonViewHolder(
-            ItemPokemonBinding.inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonPagingViewHolder {
+        return PokemonPagingViewHolder(
+            ItemPaginationPokemonBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -35,7 +36,7 @@ class PokemonPagingAdapter(
         )
     }
 
-    override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PokemonPagingViewHolder, position: Int) {
         val data = getItem(position)
         if (data != null) {
             holder.bind(data)

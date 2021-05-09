@@ -1,6 +1,8 @@
 package com.spesolution.myapplication.util.imageHelper
 
+import android.graphics.drawable.Drawable
 import android.widget.ImageView
+import androidx.annotation.DrawableRes
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
@@ -19,5 +21,11 @@ class LoadImageHelperImpl @Inject constructor(
             .thumbnail(0.25f).into(view)
     }
 
-
+    override fun loadWithGlide(view: ImageView, @DrawableRes drawable: Int) {
+        requestManager
+            .load(drawable)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .apply(requestOptions)
+            .thumbnail(0.25f).into(view)
+    }
 }

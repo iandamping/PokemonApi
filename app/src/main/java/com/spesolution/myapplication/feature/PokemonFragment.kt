@@ -11,9 +11,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.spesolution.myapplication.PokemonViewModel
+import com.spesolution.myapplication.R
 import com.spesolution.myapplication.core.domain.model.Pokemon
 import com.spesolution.myapplication.databinding.FragmentPokemonBinding
 import com.spesolution.myapplication.feature.paging.PokemonPagingAdapter
+import com.spesolution.myapplication.util.gridRecyclerviewInitializer
 import com.spesolution.myapplication.util.horizontalRecyclerviewInitializer
 import com.spesolution.myapplication.util.imageHelper.LoadImageHelper
 import dagger.hilt.android.AndroidEntryPoint
@@ -59,7 +61,7 @@ class PokemonFragment : Fragment(), PokemonPagingAdapter.PokemonPagingAdapterLis
 
     private fun FragmentPokemonBinding.initView() {
         rvPokemon.apply {
-            horizontalRecyclerviewInitializer()
+            gridRecyclerviewInitializer(2)
             adapter = pokemonAdapter
 
         }
@@ -71,6 +73,7 @@ class PokemonFragment : Fragment(), PokemonPagingAdapter.PokemonPagingAdapterLis
                 pbPokemon.isVisible = loadState.source.refresh is LoadState.Loading
             }.launchIn(this)
         }
+        imageHelper.loadWithGlide(ivBackgroundImage, R.drawable.ic_pokemon_bg_2)
 
     }
 
