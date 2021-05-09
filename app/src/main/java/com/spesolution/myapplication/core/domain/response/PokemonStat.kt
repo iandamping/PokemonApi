@@ -1,4 +1,4 @@
-package com.spesolution.myapplication.core.domain.model
+package com.spesolution.myapplication.core.domain.response
 
 /**
  * Created by Ian Damping on 08,May,2021

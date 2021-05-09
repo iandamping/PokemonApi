@@ -1,7 +1,8 @@
 package com.spesolution.myapplication.feature.paging
 
 import androidx.recyclerview.widget.RecyclerView
-import com.spesolution.myapplication.core.domain.model.Pokemon
+import com.spesolution.myapplication.core.domain.response.PokemonDetail
+import com.spesolution.myapplication.core.domain.response.PokemonPaging
 import com.spesolution.myapplication.databinding.ItemPaginationPokemonBinding
 import com.spesolution.myapplication.util.imageHelper.LoadImageHelper
 
@@ -15,7 +16,7 @@ class PokemonPagingViewHolder(
     private val loadImageHelper: LoadImageHelper
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(data: Pokemon) {
+    fun bind(data: PokemonPaging) {
         with(binding) {
             loadImageHelper.loadWithGlide(ivPokemonImage, data.pokemonImage)
             tvPokemonName.text = data.pokemonName

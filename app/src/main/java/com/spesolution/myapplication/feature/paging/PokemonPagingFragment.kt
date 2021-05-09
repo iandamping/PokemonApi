@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -16,7 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.spesolution.myapplication.PokemonViewModel
 import com.spesolution.myapplication.R
-import com.spesolution.myapplication.core.domain.model.Pokemon
+import com.spesolution.myapplication.core.domain.response.PokemonPaging
 import com.spesolution.myapplication.databinding.FragmentPokemonPagingBinding
 import com.spesolution.myapplication.module.CustomDialogQualifier
 import com.spesolution.myapplication.util.gridRecyclerviewInitializer
@@ -24,7 +23,6 @@ import com.spesolution.myapplication.util.imageHelper.LoadImageHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -36,9 +34,10 @@ import javax.inject.Inject
 class PokemonPagingFragment : Fragment(), PokemonPagingAdapter.PokemonPagingAdapterListener {
     @Inject
     lateinit var imageHelper: LoadImageHelper
+
     @Inject
     @CustomDialogQualifier
-    lateinit var customDialog:AlertDialog
+    lateinit var customDialog: AlertDialog
 
     private val vm: PokemonViewModel by viewModels()
     private var _binding: FragmentPokemonPagingBinding? = null
@@ -65,13 +64,12 @@ class PokemonPagingFragment : Fragment(), PokemonPagingAdapter.PokemonPagingAdap
         consumeNavigation()
     }
 
-    private fun consumeNavigation(){
-        viewLifecycleOwner.addRepeatingJob(Lifecycle.State.STARTED){
+    private fun consumeNavigation() {
+        viewLifecycleOwner.addRepeatingJob(Lifecycle.State.STARTED) {
             vm.navigationEventFlow.onEach { direction ->
                 findNavController().navigate(direction)
             }.launchIn(this)
         }
-
     }
 
     private fun FragmentPokemonPagingBinding.initView() {
@@ -82,7 +80,7 @@ class PokemonPagingFragment : Fragment(), PokemonPagingAdapter.PokemonPagingAdap
         }
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             pokemonAdapter.loadStateFlow.onEach { loadState ->
-                when(loadState.source.refresh){
+                when (loadState.source.refresh) {
                     is LoadState.NotLoading -> customDialog.dismiss()
                     LoadState.Loading -> customDialog.show()
                     is LoadState.Error -> customDialog.dismiss()
@@ -109,8 +107,9 @@ class PokemonPagingFragment : Fragment(), PokemonPagingAdapter.PokemonPagingAdap
         _binding = null
     }
 
-    override fun onClicked(data: Pokemon) {
-        val direction = PokemonPagingFragmentDirections.actionPokemonPagingFragmentToPokemonFragment(data.pokemonUrl)
+    override fun onClicked(data: PokemonPaging) {
+        val direction =
+            PokemonPagingFragmentDirections.actionPokemonPagingFragmentToPokemonFragment(data.pokemonUrl)
         vm.setNavigationEventChannel(direction)
     }
 }

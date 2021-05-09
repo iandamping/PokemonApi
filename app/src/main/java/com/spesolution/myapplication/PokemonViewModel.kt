@@ -22,8 +22,6 @@ class PokemonViewModel @Inject constructor(private val repo: PokemonRepository) 
     private val navigationEventChannel = Channel<NavDirections>(Channel.BUFFERED)
     val navigationEventFlow = navigationEventChannel.receiveAsFlow()
 
-    val pokemon = repo.getPokemon()
-
     val pokemonPaging =
         repo.getPagingPokemon().cachedIn(viewModelScope)
 

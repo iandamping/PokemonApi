@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.spesolution.myapplication.PokemonViewModel
 import com.spesolution.myapplication.core.domain.model.DomainResult
-import com.spesolution.myapplication.core.domain.model.Pokemon
+import com.spesolution.myapplication.core.domain.response.PokemonDetail
 import com.spesolution.myapplication.databinding.FragmentPokemonDetailBinding
 import com.spesolution.myapplication.module.CustomDialogQualifier
 import com.spesolution.myapplication.util.PokemonConstant.ONE_SKILL_MONS
@@ -56,7 +56,7 @@ class PokemonFragment : Fragment() {
         getData(args.pokemonUrl)
     }
 
-    private fun FragmentPokemonDetailBinding.initView(data: Pokemon) {
+    private fun FragmentPokemonDetailBinding.initView(data: PokemonDetail) {
         imageHelper.loadWithGlide(ivItemPokemonImage, data.pokemonImage)
         imageHelper.loadWithGlide(ivItemSmallPokemonImage1, data.pokemonSmallImage1)
         imageHelper.loadWithGlide(ivItemSmallPokemonImage2, data.pokemonSmallImage3)

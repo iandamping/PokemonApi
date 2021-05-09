@@ -3,7 +3,8 @@ package com.spesolution.myapplication.feature.paging
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
-import com.spesolution.myapplication.core.domain.model.Pokemon
+import com.spesolution.myapplication.core.domain.response.PokemonDetail
+import com.spesolution.myapplication.core.domain.response.PokemonPaging
 import com.spesolution.myapplication.databinding.ItemPaginationPokemonBinding
 import com.spesolution.myapplication.util.PokemonConstant
 import com.spesolution.myapplication.util.imageHelper.LoadImageHelper
@@ -17,10 +18,10 @@ class PokemonPagingAdapter(
     private val listener: PokemonPagingAdapterListener,
     private val loadImageHelper: LoadImageHelper
 ) :
-    PagingDataAdapter<Pokemon, PokemonPagingViewHolder>(PokemonConstant.listPokemonAdapterCallback) {
+    PagingDataAdapter<PokemonPaging, PokemonPagingViewHolder>(PokemonConstant.listPokemonAdapterCallback) {
 
     interface PokemonPagingAdapterListener {
-        fun onClicked(data: Pokemon)
+        fun onClicked(data: PokemonPaging)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonPagingViewHolder {

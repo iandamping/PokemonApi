@@ -1,8 +1,10 @@
 package com.spesolution.myapplication.core.data.datasource
 
+import androidx.paging.PagingSource
 import com.spesolution.myapplication.core.data.datasource.response.PokemonResponse
 import com.spesolution.myapplication.core.data.datasource.response.PokemonResultsResponse
 import com.spesolution.myapplication.core.data.model.DataSourceResult
+import com.spesolution.myapplication.core.domain.response.PokemonPaging
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -12,7 +14,7 @@ import kotlinx.coroutines.flow.Flow
  */
 interface PokemonRemoteDataSource {
 
-    suspend fun getMainPokemon(): DataSourceResult<List<PokemonResultsResponse>>
+    fun getPagingPokemon(): PagingSource<Int, PokemonPaging>
 
     suspend fun getDetailPokemon(url: String): PokemonResponse
 }

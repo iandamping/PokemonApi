@@ -1,7 +1,8 @@
 package com.spesolution.myapplication.util
 
 import androidx.recyclerview.widget.DiffUtil
-import com.spesolution.myapplication.core.domain.model.Pokemon
+import com.spesolution.myapplication.core.domain.response.PokemonDetail
+import com.spesolution.myapplication.core.domain.response.PokemonPaging
 
 /**
  * Created by Ian Damping on 08,May,2021
@@ -11,12 +12,12 @@ import com.spesolution.myapplication.core.domain.model.Pokemon
 object PokemonConstant {
     const val ONE_TYPE_MONS = "ONE TYPE MONS"
     const val ONE_SKILL_MONS = "ONE SKILL MONS"
-    val listPokemonAdapterCallback = object : DiffUtil.ItemCallback<Pokemon>() {
-        override fun areItemsTheSame(oldItem: Pokemon, newItem: Pokemon): Boolean {
+    val listPokemonAdapterCallback = object : DiffUtil.ItemCallback<PokemonPaging>() {
+        override fun areItemsTheSame(oldItem: PokemonPaging, newItem: PokemonPaging): Boolean {
             return oldItem.pokemonName == newItem.pokemonName
         }
 
-        override fun areContentsTheSame(oldItem: Pokemon, newItem: Pokemon): Boolean {
+        override fun areContentsTheSame(oldItem: PokemonPaging, newItem: PokemonPaging): Boolean {
             return oldItem == newItem
         }
     }
