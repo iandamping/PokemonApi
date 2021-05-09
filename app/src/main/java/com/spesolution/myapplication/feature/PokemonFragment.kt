@@ -1,5 +1,6 @@
 package com.spesolution.myapplication.feature
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import com.spesolution.myapplication.PokemonViewModel
 import com.spesolution.myapplication.core.domain.model.DomainResult
 import com.spesolution.myapplication.core.domain.model.Pokemon
 import com.spesolution.myapplication.databinding.FragmentPokemonDetailBinding
+import com.spesolution.myapplication.module.CustomDialogQualifier
 import com.spesolution.myapplication.util.PokemonConstant.ONE_SKILL_MONS
 import com.spesolution.myapplication.util.PokemonConstant.ONE_TYPE_MONS
 import com.spesolution.myapplication.util.imageHelper.LoadImageHelper
@@ -30,6 +32,10 @@ import javax.inject.Inject
 class PokemonFragment : Fragment() {
     @Inject
     lateinit var imageHelper: LoadImageHelper
+    @Inject
+    @CustomDialogQualifier
+    lateinit var customDialog: AlertDialog
+
     private val args by navArgs<PokemonFragmentArgs>()
 
     private val vm: PokemonViewModel by viewModels()
@@ -86,9 +92,15 @@ class PokemonFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             vm.pokemonDetail(url).onEach {
                 when(it){
-                    is DomainResult.Data -> binding.initView(data = it.data)
-                    is DomainResult.Error -> consumeError(it.message)
-                    DomainResult.Loading -> consumeError("loading")
+                    is DomainResult.Data -> {
+                        customDialog.dismiss()
+                        binding.initView(data = it.data)
+                    }
+                    is DomainResult.Error -> {
+                        customDialog.dismiss()
+                        consumeError(it.message)
+                    }
+                    DomainResult.Loading -> customDialog.show()
                 }
             }.launchIn(this)
         }

@@ -1,5 +1,6 @@
 package com.spesolution.myapplication.feature.paging
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.spesolution.myapplication.PokemonViewModel
 import com.spesolution.myapplication.R
 import com.spesolution.myapplication.core.domain.model.Pokemon
 import com.spesolution.myapplication.databinding.FragmentPokemonPagingBinding
+import com.spesolution.myapplication.module.CustomDialogQualifier
 import com.spesolution.myapplication.util.gridRecyclerviewInitializer
 import com.spesolution.myapplication.util.imageHelper.LoadImageHelper
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,6 +36,9 @@ import javax.inject.Inject
 class PokemonPagingFragment : Fragment(), PokemonPagingAdapter.PokemonPagingAdapterListener {
     @Inject
     lateinit var imageHelper: LoadImageHelper
+    @Inject
+    @CustomDialogQualifier
+    lateinit var customDialog:AlertDialog
 
     private val vm: PokemonViewModel by viewModels()
     private var _binding: FragmentPokemonPagingBinding? = null
@@ -77,10 +82,11 @@ class PokemonPagingFragment : Fragment(), PokemonPagingAdapter.PokemonPagingAdap
         }
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             pokemonAdapter.loadStateFlow.onEach { loadState ->
-                // Only show the list if refresh succeeds.
-                rvPokemon.isVisible = loadState.source.refresh is LoadState.NotLoading
-                // Show loading spinner during initial load or refresh.
-                pbPokemon.isVisible = loadState.source.refresh is LoadState.Loading
+                when(loadState.source.refresh){
+                    is LoadState.NotLoading -> customDialog.dismiss()
+                    LoadState.Loading -> customDialog.show()
+                    is LoadState.Error -> customDialog.dismiss()
+                }
             }.launchIn(this)
         }
         imageHelper.loadWithGlide(ivBackgroundImage, R.drawable.ic_pokemon_bg_2)

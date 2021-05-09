@@ -1,5 +1,7 @@
 package com.spesolution.myapplication.util
 
+import android.content.Context
+import android.view.LayoutInflater
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -32,3 +34,6 @@ fun RecyclerView.gridRecyclerviewInitializer(size: Int) {
         this.context, size
     )
 }
+
+inline val Context.layoutInflater: LayoutInflater
+    get() = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
