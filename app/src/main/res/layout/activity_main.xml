@@ -8,11 +8,14 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/mainNavHostFr"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        app:defaultNavHost="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/pokemon_nav"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

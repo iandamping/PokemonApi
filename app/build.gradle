@@ -67,14 +67,12 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVer"
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     kapt 'com.github.bumptech.glide:compiler:4.9.0'
-    implementation 'androidx.browser:browser:1.2.0'
     //db
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     //lottie
     implementation 'com.airbnb.android:lottie:3.2.2'
-    implementation "com.facebook.shimmer:shimmer:$shimmerVer"
     //hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"

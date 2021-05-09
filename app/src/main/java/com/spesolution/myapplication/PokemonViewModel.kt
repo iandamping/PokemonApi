@@ -2,9 +2,13 @@ package com.spesolution.myapplication
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavDirections
 import androidx.paging.cachedIn
 import com.spesolution.myapplication.core.domain.PokemonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -15,8 +19,19 @@ import javax.inject.Inject
 @HiltViewModel
 class PokemonViewModel @Inject constructor(private val repo: PokemonRepository) : ViewModel() {
 
+    private val navigationEventChannel = Channel<NavDirections>(Channel.BUFFERED)
+    val navigationEventFlow = navigationEventChannel.receiveAsFlow()
+
     val pokemon = repo.getPokemon()
 
     val pokemonPaging =
         repo.getPagingPokemon().cachedIn(viewModelScope)
+
+    fun pokemonDetail(url:String)= repo.getDetailPokemon(url)
+
+    fun setNavigationEventChannel(directions: NavDirections) {
+        viewModelScope.launch {
+            navigationEventChannel.send(directions)
+        }
+    }
 }

@@ -15,4 +15,6 @@ interface PokemonRepository {
     fun getPokemon(): Flow<DomainResult<List<Pokemon>>>
 
     fun getPagingPokemon(): Flow<PagingData<Pokemon>>
+
+    fun getDetailPokemon(url:String): Flow<DomainResult<Pokemon>>
 }

@@ -5,8 +5,6 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import com.spesolution.myapplication.core.domain.model.Pokemon
 import com.spesolution.myapplication.databinding.ItemPaginationPokemonBinding
-import com.spesolution.myapplication.databinding.ItemPokemonBinding
-import com.spesolution.myapplication.feature.PokemonViewHolder
 import com.spesolution.myapplication.util.PokemonConstant
 import com.spesolution.myapplication.util.imageHelper.LoadImageHelper
 

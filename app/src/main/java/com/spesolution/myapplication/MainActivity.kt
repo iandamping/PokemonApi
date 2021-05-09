@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.spesolution.myapplication.databinding.ActivityMainBinding
 import com.spesolution.myapplication.feature.PokemonFragment
+import com.spesolution.myapplication.feature.paging.PokemonPagingFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -14,12 +15,5 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setupPokemon()
-    }
-
-    private fun setupPokemon() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.mainNavHostFr, PokemonFragment())
-            .commit()
     }
 }

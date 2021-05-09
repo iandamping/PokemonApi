@@ -35,7 +35,6 @@ object GlideModule {
     fun provideRequestOptions(): RequestOptions {
         return RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
             .format(DecodeFormat.PREFER_RGB_565)
-            // .placeholder(R.drawable.empty_image)
             .error(R.drawable.no_data)
     }
 }

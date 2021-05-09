@@ -12,7 +12,8 @@ import com.spesolution.myapplication.util.PokemonConstant.ONE_TYPE_MONS
  * Github https://github.com/iandamping
  * Indonesia.
  */
-fun PokemonResponse.mapToDomain(): Pokemon = Pokemon(
+fun PokemonResponse.mapToDomain(url:String): Pokemon = Pokemon(
+    pokemonUrl= url,
     pokemonWeight = pokemonWeight,
     pokemonHeight = pokemonHeight,
     pokemonName = pokemonName,

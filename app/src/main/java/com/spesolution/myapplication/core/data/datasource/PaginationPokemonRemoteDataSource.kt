@@ -44,7 +44,7 @@ class PaginationPokemonRemoteDataSource @Inject constructor(
                 is Results.Success -> {
                     val data = response.data.pokemonResults.map { singleItem ->
                         val results = api.getPokemon(singleItem.pokemonUrl)
-                        results.mapToDomain()
+                        results.mapToDomain(singleItem.pokemonUrl)
                     }
                     if (data.isNullOrEmpty()){
                         LoadResult.Error(Throwable(EMPTY_DATA))

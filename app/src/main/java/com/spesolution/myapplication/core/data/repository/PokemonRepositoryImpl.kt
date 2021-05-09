@@ -14,6 +14,7 @@ import com.spesolution.myapplication.core.domain.model.DomainResult
 import com.spesolution.myapplication.core.domain.model.Pokemon
 import com.spesolution.myapplication.core.domain.model.mapToDomain
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
@@ -30,13 +31,12 @@ class PokemonRepositoryImpl @Inject constructor(
     PokemonRepository {
 
     override fun getPokemon(): Flow<DomainResult<List<Pokemon>>> {
-
         return flow {
             when (val main = remoteDataSource.getMainPokemon()) {
                 is DataSourceResult.SourceValue -> {
                     val data = main.data.map { singleItem ->
                         val results = remoteDataSource.getDetailPokemon(singleItem.pokemonUrl)
-                        results.mapToDomain()
+                        results.mapToDomain(singleItem.pokemonUrl)
                     }
                     if (data.isNullOrEmpty()) {
                         emit(DomainResult.Error(EMPTY_DATA))
@@ -56,6 +56,19 @@ class PokemonRepositoryImpl @Inject constructor(
             config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
             pagingSourceFactory = { pagingRemoteDataSource }
         ).flow
+    }
+
+    override fun getDetailPokemon(url: String): Flow<DomainResult<Pokemon>> {
+        return flow {
+            try {
+                val data = remoteDataSource.getDetailPokemon(url).mapToDomain(url)
+                emit(DomainResult.Data(data))
+            } catch (e: Exception) {
+                emit(DomainResult.Error(e.message ?: NETWORK_ERROR))
+            }
+
+        }.catch { emit(DomainResult.Error(it.message ?: NETWORK_ERROR)) }
+            .onStart { emit(DomainResult.Loading) }
     }
 }
 

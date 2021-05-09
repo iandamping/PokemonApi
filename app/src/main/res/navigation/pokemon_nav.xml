@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/pokemon_nav"
+    app:startDestination="@id/pokemonPagingFragment">
+
+    <fragment
+        android:id="@+id/pokemonPagingFragment"
+        android:name="com.spesolution.myapplication.feature.paging.PokemonPagingFragment"
+        android:label="PokemonPagingFragment" >
+        <action
+            android:id="@+id/action_pokemonPagingFragment_to_pokemonFragment"
+            app:destination="@id/pokemonFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pokemonFragment"
+        android:name="com.spesolution.myapplication.feature.PokemonFragment"
+        android:label="PokemonFragment" >
+        <argument
+            android:name="pokemonUrl"
+            app:argType="string" />
+    </fragment>
+</navigation>

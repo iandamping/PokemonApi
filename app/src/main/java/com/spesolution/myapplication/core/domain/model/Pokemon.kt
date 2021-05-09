@@ -6,6 +6,7 @@ package com.spesolution.myapplication.core.domain.model
  * Indonesia.
  */
 data class Pokemon(
+    val pokemonUrl:String,
     val pokemonName:String,
     val pokemonWeight:Int,
     val pokemonHeight:Int,
