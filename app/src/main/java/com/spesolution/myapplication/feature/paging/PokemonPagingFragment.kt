@@ -13,7 +13,7 @@ import androidx.lifecycle.addRepeatingJob
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import com.spesolution.myapplication.PokemonViewModel
+import com.spesolution.myapplication.feature.PokemonViewModel
 import com.spesolution.myapplication.R
 import com.spesolution.myapplication.core.domain.response.PokemonPaging
 import com.spesolution.myapplication.databinding.FragmentPokemonPagingBinding

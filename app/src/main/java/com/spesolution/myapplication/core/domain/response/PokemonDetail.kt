@@ -20,6 +20,8 @@ data class PokemonDetail(
     val pokemonStat1: PokemonStat,
     val pokemonStat2: PokemonStat,
     val pokemonStat3: PokemonStat,
+    val pokemonStat4: PokemonStat,
+    val pokemonStat5: PokemonStat,
     val pokemonType0:String,
     val pokemonType1:String,
 )

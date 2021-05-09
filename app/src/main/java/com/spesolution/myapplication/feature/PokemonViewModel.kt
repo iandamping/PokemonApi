@@ -1,4 +1,4 @@
-package com.spesolution.myapplication
+package com.spesolution.myapplication.feature
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import com.spesolution.myapplication.PokemonViewModel
 import com.spesolution.myapplication.core.domain.model.DomainResult
 import com.spesolution.myapplication.core.domain.response.PokemonDetail
 import com.spesolution.myapplication.databinding.FragmentPokemonDetailBinding
@@ -70,7 +69,10 @@ class PokemonFragment : Fragment() {
         tvStatPoint2.text = data.pokemonStat2.point.toString()
         tvStatName3.text = data.pokemonStat3.name
         tvStatPoint3.text = data.pokemonStat3.point.toString()
-
+        tvStatName4.text = data.pokemonStat4.name
+        tvStatPoint4.text = data.pokemonStat4.point.toString()
+        tvStatName5.text = data.pokemonStat5.name
+        tvStatPoint5.text = data.pokemonStat5.point.toString()
         tvType0.text = data.pokemonType0
         if (data.pokemonType1 == ONE_TYPE_MONS) {
             llType1.visibility = View.GONE
