@@ -6,9 +6,8 @@ import com.spesolution.myapplication.core.data.datasource.remote.ApiInterface
 import com.spesolution.myapplication.core.data.datasource.remote.BaseSource
 import com.spesolution.myapplication.core.data.datasource.remote.NetworkConstant
 import com.spesolution.myapplication.core.data.datasource.remote.NetworkConstant.EMPTY_DATA
-import com.spesolution.myapplication.core.data.datasource.response.PokemonResponse
-import com.spesolution.myapplication.core.data.datasource.response.PokemonResultsResponse
-import com.spesolution.myapplication.core.data.model.DataSourceResult
+import com.spesolution.myapplication.core.data.datasource.response.PokemonDetailResponse
+import com.spesolution.myapplication.core.data.datasource.response.PokemonSpeciesDetailResponse
 import com.spesolution.myapplication.core.data.model.Results
 import com.spesolution.myapplication.core.domain.model.mapToPaging
 import com.spesolution.myapplication.core.domain.response.PokemonPaging
@@ -70,7 +69,11 @@ class PokemonRemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getDetailPokemon(url: String): PokemonResponse {
+    override suspend fun getDetailPokemon(url: String): PokemonDetailResponse {
         return api.getPokemon(url)
+    }
+
+    override suspend fun getDetailSpeciesPokemon(url: String): PokemonSpeciesDetailResponse {
+        return api.getPokemonSpecies(url)
     }
 }

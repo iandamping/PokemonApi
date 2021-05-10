@@ -2,11 +2,15 @@ package com.spesolution.myapplication.core.domain.model
 
 import com.spesolution.myapplication.core.data.datasource.response.PokemonAbilitiesResponse
 import com.spesolution.myapplication.core.data.datasource.response.PokemonBasicStatsResponse
-import com.spesolution.myapplication.core.data.datasource.response.PokemonResponse
+import com.spesolution.myapplication.core.data.datasource.response.PokemonDetailResponse
+import com.spesolution.myapplication.core.data.datasource.response.PokemonSpeciesDetailResponse
+import com.spesolution.myapplication.core.data.datasource.response.PokemonSpeciesEggGroupResponse
 import com.spesolution.myapplication.core.data.datasource.response.PokemonTypesResponse
 import com.spesolution.myapplication.core.domain.response.PokemonDetail
+import com.spesolution.myapplication.core.domain.response.PokemonDetailSpecies
 import com.spesolution.myapplication.core.domain.response.PokemonPaging
 import com.spesolution.myapplication.core.domain.response.PokemonStat
+import com.spesolution.myapplication.util.PokemonConstant.ONE_EGG_MONS
 import com.spesolution.myapplication.util.PokemonConstant.ONE_SKILL_MONS
 import com.spesolution.myapplication.util.PokemonConstant.ONE_TYPE_MONS
 
@@ -15,7 +19,7 @@ import com.spesolution.myapplication.util.PokemonConstant.ONE_TYPE_MONS
  * Github https://github.com/iandamping
  * Indonesia.
  */
-fun PokemonResponse.mapToDetail(): PokemonDetail = PokemonDetail(
+fun PokemonDetailResponse.mapToDetail(): PokemonDetail = PokemonDetail(
     pokemonWeight = pokemonWeight,
     pokemonHeight = pokemonHeight,
     pokemonName = pokemonName,
@@ -33,10 +37,11 @@ fun PokemonResponse.mapToDetail(): PokemonDetail = PokemonDetail(
     pokemonType0 = pokemonTypes[0].type.typeName,
     pokemonType1 = pokemonTypes.checkTypeList(1, 1),
     pokemonAbility1 = pokemonAbilities[0].abilities.abilityName,
-    pokemonAbility2 = pokemonAbilities.checkAbilitiesList(1, 1)
+    pokemonAbility2 = pokemonAbilities.checkAbilitiesList(1, 1),
+    pokemonSpeciesUrl = pokemonSpecies.speciesUrl
 )
 
-fun PokemonResponse.mapToPaging(url: String): PokemonPaging = PokemonPaging(
+fun PokemonDetailResponse.mapToPaging(url: String): PokemonPaging = PokemonPaging(
     pokemonUrl = url,
     pokemonName = pokemonName,
     pokemonImage = pokemonImage.sprites.other.image
@@ -55,3 +60,20 @@ fun List<PokemonAbilitiesResponse>.checkAbilitiesList(size: Int, position: Int):
     if (this.size > size) {
         this[position].abilities.abilityName
     } else ONE_SKILL_MONS
+
+fun PokemonSpeciesDetailResponse.mapToSpeciesDetail(): PokemonDetailSpecies = PokemonDetailSpecies(
+    happines = pokemonHappines,
+    captureRate = pokemonCaptureRate,
+    color = pokemonColor.pokemonColor,
+    eggGroup1 = pokemonEggGroup[0].eggName,
+    eggGroup2 = pokemonEggGroup.checkEggGroupList(1, 1),
+    generation = pokemonGeneration.pokemonGenerationLString,
+    growthRate = pokemonGrowthRate.pokemonGrowthRate,
+    habitat = pokemonHabitat.pokemonHabitat,
+    shape = pokemonShape.pokemonShape
+)
+
+fun List<PokemonSpeciesEggGroupResponse>.checkEggGroupList(size: Int, position: Int): String =
+    if (this.size > size) {
+        this[position].eggName
+    } else ONE_EGG_MONS

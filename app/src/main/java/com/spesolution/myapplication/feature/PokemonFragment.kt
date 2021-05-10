@@ -12,14 +12,17 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.spesolution.myapplication.core.domain.model.DomainResult
 import com.spesolution.myapplication.core.domain.response.PokemonDetail
+import com.spesolution.myapplication.core.domain.response.PokemonDetailSpecies
 import com.spesolution.myapplication.databinding.FragmentPokemonDetailBinding
 import com.spesolution.myapplication.module.CustomDialogQualifier
+import com.spesolution.myapplication.util.PokemonConstant.ONE_EGG_MONS
 import com.spesolution.myapplication.util.PokemonConstant.ONE_SKILL_MONS
 import com.spesolution.myapplication.util.PokemonConstant.ONE_TYPE_MONS
 import com.spesolution.myapplication.util.imageHelper.LoadImageHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -88,6 +91,24 @@ class PokemonFragment : Fragment() {
             llAbilities1.visibility = View.VISIBLE
             tvAbility1.text = data.pokemonAbility2
         }
+
+    }
+
+    private fun FragmentPokemonDetailBinding.initSpeciesView(data: PokemonDetailSpecies) {
+        tvGenerationName.text = data.generation
+        tvGrowthRate.text = data.growthRate
+        tvHappinesPoint.text = data.happines.toString()
+        tvCaptureRate.text = data.captureRate.toString()
+        tvPokemonColor.text = data.color
+        tvHabitatName.text = data.habitat
+        tvShapeName.text = data.shape
+        tvEgg0.text = data.eggGroup1
+        if (data.eggGroup2 == ONE_EGG_MONS) {
+            llEgg1.visibility = View.GONE
+        } else {
+            llEgg1.visibility = View.VISIBLE
+            tvEgg1.text = data.eggGroup2
+        }
     }
 
     private fun getData(url:String) {
@@ -97,6 +118,7 @@ class PokemonFragment : Fragment() {
                     is DomainResult.Data -> {
                         customDialog.dismiss()
                         binding.initView(data = it.data)
+                        getSpeciesData(it.data.pokemonSpeciesUrl)
                     }
                     is DomainResult.Error -> {
                         customDialog.dismiss()
@@ -107,6 +129,26 @@ class PokemonFragment : Fragment() {
             }.launchIn(this)
         }
     }
+
+       private fun getSpeciesData(url:String) {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            vm.pokemonSpeciesDetail(url).onEach {
+                when(it){
+                    is DomainResult.Data -> {
+                        customDialog.dismiss()
+                        binding.initSpeciesView(it.data)
+                    }
+                    is DomainResult.Error -> {
+                        customDialog.dismiss()
+                        consumeError(it.message)
+                    }
+                    DomainResult.Loading -> customDialog.show()
+                }
+            }.launchIn(this)
+        }
+    }
+
+
 
     private fun consumeError(msg: String) {
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()

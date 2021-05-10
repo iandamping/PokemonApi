@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
  * Github https://github.com/iandamping
  * Indonesia.
  */
-data class PokemonResponse(
+data class PokemonDetailResponse(
     @SerializedName("id") val pokemonId: Int,
     @SerializedName("name") val pokemonName: String,
     @SerializedName("weight") val pokemonWeight: Int,
@@ -16,4 +16,5 @@ data class PokemonResponse(
     @SerializedName("stats") val pokemonStats: List<PokemonBasicStatsResponse>,
     @SerializedName("types") val pokemonTypes: List<PokemonTypesResponse>,
     @SerializedName("abilities") val pokemonAbilities: List<PokemonAbilitiesResponse>,
+    @SerializedName("species") val pokemonSpecies: PokemonSpeciesResultResponse,
 )

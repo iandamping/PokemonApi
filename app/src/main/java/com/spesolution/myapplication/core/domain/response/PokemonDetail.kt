@@ -24,4 +24,5 @@ data class PokemonDetail(
     val pokemonStat5: PokemonStat,
     val pokemonType0:String,
     val pokemonType1:String,
+    val pokemonSpeciesUrl:String
 )

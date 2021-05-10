@@ -9,7 +9,9 @@ import com.spesolution.myapplication.core.data.datasource.remote.NetworkConstant
 import com.spesolution.myapplication.core.domain.PokemonRepository
 import com.spesolution.myapplication.core.domain.model.DomainResult
 import com.spesolution.myapplication.core.domain.model.mapToDetail
+import com.spesolution.myapplication.core.domain.model.mapToSpeciesDetail
 import com.spesolution.myapplication.core.domain.response.PokemonDetail
+import com.spesolution.myapplication.core.domain.response.PokemonDetailSpecies
 import com.spesolution.myapplication.core.domain.response.PokemonPaging
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -38,6 +40,19 @@ class PokemonRepositoryImpl @Inject constructor(
         return flow {
             try {
                 val data = remoteDataSource.getDetailPokemon(url).mapToDetail()
+                emit(DomainResult.Data(data))
+            } catch (e: Exception) {
+                emit(DomainResult.Error(e.message ?: NETWORK_ERROR))
+            }
+
+        }.catch { emit(DomainResult.Error(it.message ?: NETWORK_ERROR)) }
+            .onStart { emit(DomainResult.Loading) }
+    }
+
+    override fun getDetailSpeciesPokemon(url: String): Flow<DomainResult<PokemonDetailSpecies>> {
+        return flow {
+            try {
+                val data = remoteDataSource.getDetailSpeciesPokemon(url).mapToSpeciesDetail()
                 emit(DomainResult.Data(data))
             } catch (e: Exception) {
                 emit(DomainResult.Error(e.message ?: NETWORK_ERROR))

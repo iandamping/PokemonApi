@@ -27,6 +27,8 @@ class PokemonViewModel @Inject constructor(private val repo: PokemonRepository) 
 
     fun pokemonDetail(url:String)= repo.getDetailPokemon(url)
 
+    fun pokemonSpeciesDetail(url:String)= repo.getDetailSpeciesPokemon(url)
+
     fun setNavigationEventChannel(directions: NavDirections) {
         viewModelScope.launch {
             navigationEventChannel.send(directions)
