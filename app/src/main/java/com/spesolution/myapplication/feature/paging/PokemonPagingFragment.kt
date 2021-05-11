@@ -13,10 +13,10 @@ import androidx.lifecycle.addRepeatingJob
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import com.spesolution.myapplication.feature.PokemonViewModel
 import com.spesolution.myapplication.R
 import com.spesolution.myapplication.core.domain.response.PokemonPaging
 import com.spesolution.myapplication.databinding.FragmentPokemonPagingBinding
+import com.spesolution.myapplication.feature.PokemonViewModel
 import com.spesolution.myapplication.module.CustomDialogQualifier
 import com.spesolution.myapplication.util.gridRecyclerviewInitializer
 import com.spesolution.myapplication.util.imageHelper.LoadImageHelper
@@ -31,13 +31,11 @@ import javax.inject.Inject
  * Indonesia.
  */
 @AndroidEntryPoint
-class PokemonPagingFragment : Fragment(), PokemonPagingAdapter.PokemonPagingAdapterListener {
-    @Inject
-    lateinit var imageHelper: LoadImageHelper
-
-    @Inject
-    @CustomDialogQualifier
-    lateinit var customDialog: AlertDialog
+class PokemonPagingFragment @Inject constructor(
+    private val imageHelper: LoadImageHelper,
+    @CustomDialogQualifier private val customDialog: AlertDialog
+) : Fragment(),
+    PokemonPagingAdapter.PokemonPagingAdapterListener {
 
     private val vm: PokemonViewModel by viewModels()
     private var _binding: FragmentPokemonPagingBinding? = null
@@ -96,10 +94,6 @@ class PokemonPagingFragment : Fragment(), PokemonPagingAdapter.PokemonPagingAdap
                 pokemonAdapter.submitData(it)
             }.launchIn(this)
         }
-    }
-
-    private fun consumeError(msg: String) {
-        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {

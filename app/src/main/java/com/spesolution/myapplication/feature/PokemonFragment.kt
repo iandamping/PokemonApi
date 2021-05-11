@@ -22,7 +22,6 @@ import com.spesolution.myapplication.util.imageHelper.LoadImageHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -31,12 +30,10 @@ import javax.inject.Inject
  * Indonesia.
  */
 @AndroidEntryPoint
-class PokemonFragment : Fragment() {
-    @Inject
-    lateinit var imageHelper: LoadImageHelper
-    @Inject
-    @CustomDialogQualifier
-    lateinit var customDialog: AlertDialog
+class PokemonFragment @Inject constructor(
+    private val imageHelper: LoadImageHelper,
+    @CustomDialogQualifier private val customDialog: AlertDialog
+) : Fragment() {
 
     private val args by navArgs<PokemonFragmentArgs>()
 
@@ -91,7 +88,6 @@ class PokemonFragment : Fragment() {
             llAbilities1.visibility = View.VISIBLE
             tvAbility1.text = data.pokemonAbility2
         }
-
     }
 
     private fun FragmentPokemonDetailBinding.initSpeciesView(data: PokemonDetailSpecies) {
@@ -111,44 +107,50 @@ class PokemonFragment : Fragment() {
         }
     }
 
-    private fun getData(url:String) {
+    private fun getData(url: String) {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             vm.pokemonDetail(url).onEach {
-                when(it){
-                    is DomainResult.Data -> {
-                        customDialog.dismiss()
-                        binding.initView(data = it.data)
-                        getSpeciesData(it.data.pokemonSpeciesUrl)
-                    }
-                    is DomainResult.Error -> {
-                        customDialog.dismiss()
-                        consumeError(it.message)
-                    }
-                    DomainResult.Loading -> customDialog.show()
-                }
+                consumePokemonDetail(it)
             }.launchIn(this)
         }
     }
 
-       private fun getSpeciesData(url:String) {
+    private fun consumePokemonDetail(data: DomainResult<PokemonDetail>) {
+        when (data) {
+            is DomainResult.Data -> {
+                customDialog.dismiss()
+                binding.initView(data = data.data)
+                getSpeciesData(data.data.pokemonSpeciesUrl)
+            }
+            is DomainResult.Error -> {
+                customDialog.dismiss()
+                consumeError(data.message)
+            }
+            DomainResult.Loading -> customDialog.show()
+        }
+    }
+
+    private fun consumePokemonDetailSpecies(data: DomainResult<PokemonDetailSpecies>) {
+        when (data) {
+            is DomainResult.Data -> {
+                customDialog.dismiss()
+                binding.initSpeciesView(data.data)
+            }
+            is DomainResult.Error -> {
+                customDialog.dismiss()
+                consumeError(data.message)
+            }
+            DomainResult.Loading -> customDialog.show()
+        }
+    }
+
+    private fun getSpeciesData(url: String) {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             vm.pokemonSpeciesDetail(url).onEach {
-                when(it){
-                    is DomainResult.Data -> {
-                        customDialog.dismiss()
-                        binding.initSpeciesView(it.data)
-                    }
-                    is DomainResult.Error -> {
-                        customDialog.dismiss()
-                        consumeError(it.message)
-                    }
-                    DomainResult.Loading -> customDialog.show()
-                }
+                consumePokemonDetailSpecies(it)
             }.launchIn(this)
         }
     }
-
-
 
     private fun consumeError(msg: String) {
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
