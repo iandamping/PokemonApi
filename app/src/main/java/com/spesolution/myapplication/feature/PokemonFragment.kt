@@ -20,8 +20,12 @@ import com.spesolution.myapplication.util.PokemonConstant.ONE_SKILL_MONS
 import com.spesolution.myapplication.util.PokemonConstant.ONE_TYPE_MONS
 import com.spesolution.myapplication.util.imageHelper.LoadImageHelper
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 
 /**
@@ -109,45 +113,17 @@ class PokemonFragment @Inject constructor(
 
     private fun getData(url: String) {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            vm.pokemonDetail(url).onEach {
-                consumePokemonDetail(it)
-            }.launchIn(this)
-        }
-    }
-
-    private fun consumePokemonDetail(data: DomainResult<PokemonDetail>) {
-        when (data) {
-            is DomainResult.Data -> {
+            vm.pokemonDetail(url).flatMapMerge { detailPokemon ->
+                binding.initView(data = detailPokemon)
+                vm.pokemonSpeciesDetail(detailPokemon.pokemonSpeciesUrl)
+            }.onEach { detailPokemonSpecies ->
+                binding.initSpeciesView(detailPokemonSpecies)
+            }.catch {
+                consumeError(it.localizedMessage ?: "Error happen")
+            }.onStart {
+                customDialog.show()
+            }.onCompletion {
                 customDialog.dismiss()
-                binding.initView(data = data.data)
-                getSpeciesData(data.data.pokemonSpeciesUrl)
-            }
-            is DomainResult.Error -> {
-                customDialog.dismiss()
-                consumeError(data.message)
-            }
-            DomainResult.Loading -> customDialog.show()
-        }
-    }
-
-    private fun consumePokemonDetailSpecies(data: DomainResult<PokemonDetailSpecies>) {
-        when (data) {
-            is DomainResult.Data -> {
-                customDialog.dismiss()
-                binding.initSpeciesView(data.data)
-            }
-            is DomainResult.Error -> {
-                customDialog.dismiss()
-                consumeError(data.message)
-            }
-            DomainResult.Loading -> customDialog.show()
-        }
-    }
-
-    private fun getSpeciesData(url: String) {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            vm.pokemonSpeciesDetail(url).onEach {
-                consumePokemonDetailSpecies(it)
             }.launchIn(this)
         }
     }

@@ -16,7 +16,7 @@ interface PokemonRepository {
 
     fun getPagingPokemon(): Flow<PagingData<PokemonPaging>>
 
-    fun getDetailPokemon(url:String): Flow<DomainResult<PokemonDetail>>
+    fun getDetailPokemon(url:String): Flow<PokemonDetail>
 
-    fun getDetailSpeciesPokemon(url:String): Flow<DomainResult<PokemonDetailSpecies>>
+    fun getDetailSpeciesPokemon(url:String): Flow<PokemonDetailSpecies>
 }
