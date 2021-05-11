@@ -11,6 +11,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ActivityContext
+import dagger.hilt.android.scopes.ActivityScoped
 
 /**
  * Created by Ian Damping on 09,May,2021
@@ -22,6 +23,7 @@ import dagger.hilt.android.qualifiers.ActivityContext
 class LottieDialogModule {
 
     @Provides
+    @ActivityScoped
     @CustomDialogQualifier
     fun provideLottieDialog(@ActivityContext context: Context): AlertDialog {
         val loadingBinding = CustomLoadingBinding.inflate(context.layoutInflater)
