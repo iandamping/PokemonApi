@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PokemonViewModel @Inject constructor(private val repo: PokemonRepository) : ViewModel() {
 
-    private val navigationEventChannel = Channel<NavDirections>(Channel.BUFFERED)
+    private val navigationEventChannel = Channel<NavDirections>(Channel.CONFLATED)
     val navigationEventFlow = navigationEventChannel.receiveAsFlow()
 
     val pokemonPaging =
