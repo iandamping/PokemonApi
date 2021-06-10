@@ -6,6 +6,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.scopes.ActivityScoped
 
 /**
  * Created by Ian Damping on 08,May,2021
@@ -17,5 +18,6 @@ import dagger.hilt.android.components.ActivityComponent
 interface HelperModule {
 
     @Binds
+    @ActivityScoped
     fun bindsLoadImageHelper(loadImageHelperImpl: LoadImageHelperImpl): LoadImageHelper
 }

@@ -21,8 +21,10 @@ import com.spesolution.myapplication.module.CustomDialogQualifier
 import com.spesolution.myapplication.util.gridRecyclerviewInitializer
 import com.spesolution.myapplication.util.imageHelper.LoadImageHelper
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -76,9 +78,11 @@ class PokemonPagingFragment @Inject constructor(
             adapter = pokemonAdapter
 
         }
+
+
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             pokemonAdapter.loadStateFlow.onEach { loadState ->
-                when (loadState.source.refresh) {
+                when (loadState.mediator?.refresh) {
                     is LoadState.NotLoading -> customDialog.dismiss()
                     LoadState.Loading -> customDialog.show()
                     is LoadState.Error -> customDialog.dismiss()
@@ -90,9 +94,9 @@ class PokemonPagingFragment @Inject constructor(
 
     private fun getData() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            vm.pokemonPaging.onEach {
+            vm.pokemonPaging.collectLatest {
                 pokemonAdapter.submitData(it)
-            }.launchIn(this)
+            }
         }
     }
 

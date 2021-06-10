@@ -1,5 +1,7 @@
 package com.spesolution.myapplication.core.domain.model
 
+import com.spesolution.myapplication.core.data.datasource.cache.entity.PokemonFavoriteEntity
+import com.spesolution.myapplication.core.data.datasource.cache.entity.PokemonPaginationEntity
 import com.spesolution.myapplication.core.data.datasource.response.PokemonAbilitiesResponse
 import com.spesolution.myapplication.core.data.datasource.response.PokemonBasicStatsResponse
 import com.spesolution.myapplication.core.data.datasource.response.PokemonDetailResponse
@@ -41,10 +43,52 @@ fun PokemonDetailResponse.mapToDetail(): PokemonDetail = PokemonDetail(
     pokemonSpeciesUrl = pokemonSpecies.speciesUrl
 )
 
+fun PokemonDetailResponse.mapToFavoriteDatabase(): PokemonFavoriteEntity = PokemonFavoriteEntity(
+    pokemonFavoriteId = null,
+    pokemonWeight = pokemonWeight,
+    pokemonHeight = pokemonHeight,
+    pokemonName = pokemonName,
+    pokemonImage = pokemonImage.sprites.other.image,
+    pokemonSmallImage1 = pokemonImage.smallImage1,
+    pokemonSmallImage2 = pokemonImage.smallImage2,
+    pokemonSmallImage3 = pokemonImage.smallImage3,
+    pokemonSmallImage4 = pokemonImage.smallImage4,
+    pokemonStatName0 = pokemonStats[0].statName.name,
+    pokemonStatName1 = pokemonStats[1].statName.name,
+    pokemonStatName2 = pokemonStats[2].statName.name,
+    pokemonStatName3 = pokemonStats[3].statName.name,
+    pokemonStatName4 = pokemonStats[4].statName.name,
+    pokemonStatName5 = pokemonStats[5].statName.name,
+    pokemonStatPoint0 = pokemonStats[0].baseStat,
+    pokemonStatPoint1 = pokemonStats[1].baseStat,
+    pokemonStatPoint2 = pokemonStats[2].baseStat,
+    pokemonStatPoint3 = pokemonStats[3].baseStat,
+    pokemonStatPoint4 = pokemonStats[4].baseStat,
+    pokemonStatPoint5 = pokemonStats[5].baseStat,
+    pokemonType0 = pokemonTypes[0].type.typeName,
+    pokemonType1 = pokemonTypes[1].type.typeName,
+    pokemonAbility1 = pokemonAbilities[0].abilities.abilityName,
+    pokemonAbility2 = pokemonAbilities[1].abilities.abilityName,
+    pokemonSpeciesUrl = pokemonSpecies.speciesUrl
+)
+
 fun PokemonDetailResponse.mapToPaging(url: String): PokemonPaging = PokemonPaging(
     pokemonUrl = url,
     pokemonName = pokemonName,
     pokemonImage = pokemonImage.sprites.other.image
+)
+
+fun PokemonPaging.mapToPagingDatabase():PokemonPaginationEntity = PokemonPaginationEntity(
+    pokemonId = null,
+    pokemonUrl = pokemonUrl,
+    pokemonName = pokemonName,
+    pokemonImage = pokemonImage
+)
+
+fun PokemonPaginationEntity.mapToDomainPaging():PokemonPaging = PokemonPaging(
+    pokemonUrl = pokemonUrl,
+    pokemonName = pokemonName,
+    pokemonImage = pokemonImage
 )
 
 fun PokemonBasicStatsResponse.mapToDetail(): PokemonStat = PokemonStat(

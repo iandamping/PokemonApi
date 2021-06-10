@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
 import androidx.paging.cachedIn
-import com.spesolution.myapplication.core.domain.PokemonRepository
+import com.spesolution.myapplication.core.domain.usecase.PokemonUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -17,17 +17,17 @@ import javax.inject.Inject
  * Indonesia.
  */
 @HiltViewModel
-class PokemonViewModel @Inject constructor(private val repo: PokemonRepository) : ViewModel() {
+class PokemonViewModel @Inject constructor(private val useCase: PokemonUseCase) : ViewModel() {
 
     private val navigationEventChannel = Channel<NavDirections>(Channel.CONFLATED)
     val navigationEventFlow = navigationEventChannel.receiveAsFlow()
 
     val pokemonPaging =
-        repo.getPagingPokemon().cachedIn(viewModelScope)
+        useCase.getPagingPokemon().cachedIn(viewModelScope)
 
-    fun pokemonDetail(url:String)= repo.getDetailPokemon(url)
+    fun pokemonDetail(url: String) = useCase.getDetailPokemon(url)
 
-    fun pokemonSpeciesDetail(url:String)= repo.getDetailSpeciesPokemon(url)
+    fun pokemonSpeciesDetail(url: String) = useCase.getDetailSpeciesPokemon(url)
 
     fun setNavigationEventChannel(directions: NavDirections) {
         viewModelScope.launch {
