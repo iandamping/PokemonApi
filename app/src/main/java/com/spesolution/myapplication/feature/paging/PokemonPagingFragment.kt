@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -17,10 +16,12 @@ import com.spesolution.myapplication.R
 import com.spesolution.myapplication.core.domain.response.PokemonPaging
 import com.spesolution.myapplication.databinding.FragmentPokemonPagingBinding
 import com.spesolution.myapplication.feature.PokemonViewModel
+import com.spesolution.myapplication.feature.paging.loading_adapter.PokemonPagingLoadAdapter
 import com.spesolution.myapplication.module.CustomDialogQualifier
 import com.spesolution.myapplication.util.gridRecyclerviewInitializer
 import com.spesolution.myapplication.util.imageHelper.LoadImageHelper
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -73,7 +74,10 @@ class PokemonPagingFragment @Inject constructor(
     private fun FragmentPokemonPagingBinding.initView() {
         rvPokemon.apply {
             gridRecyclerviewInitializer(2)
-            adapter = pokemonAdapter
+            adapter = pokemonAdapter.withLoadStateHeaderAndFooter(
+                header = PokemonPagingLoadAdapter { pokemonAdapter.retry() },
+                footer = PokemonPagingLoadAdapter { pokemonAdapter.retry() }
+            )
 
         }
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
@@ -90,9 +94,9 @@ class PokemonPagingFragment @Inject constructor(
 
     private fun getData() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            vm.pokemonPaging.onEach {
+            vm.pokemonPaging.collectLatest {
                 pokemonAdapter.submitData(it)
-            }.launchIn(this)
+            }
         }
     }
 
