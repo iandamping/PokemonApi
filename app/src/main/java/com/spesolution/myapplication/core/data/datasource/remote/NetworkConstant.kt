@@ -13,5 +13,5 @@ object NetworkConstant {
     const val NETWORK_ERROR = "ERROR"
     const val POKEMON_STARTING_OFFSET = 0
     const val POKEMON_OFFSET = 20
-    const val NETWORK_PAGE_SIZE = 20
+    const val NETWORK_PAGE_SIZE = 2
 }

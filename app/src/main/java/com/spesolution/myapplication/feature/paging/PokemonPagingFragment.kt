@@ -17,6 +17,7 @@ import com.spesolution.myapplication.R
 import com.spesolution.myapplication.core.domain.response.PokemonPaging
 import com.spesolution.myapplication.databinding.FragmentPokemonPagingBinding
 import com.spesolution.myapplication.feature.PokemonViewModel
+import com.spesolution.myapplication.feature.paging.paging.PokemonPagingLoadAdapter
 import com.spesolution.myapplication.module.CustomDialogQualifier
 import com.spesolution.myapplication.util.gridRecyclerviewInitializer
 import com.spesolution.myapplication.util.imageHelper.LoadImageHelper
@@ -75,7 +76,10 @@ class PokemonPagingFragment @Inject constructor(
     private fun FragmentPokemonPagingBinding.initView() {
         rvPokemon.apply {
             gridRecyclerviewInitializer(2)
-            adapter = pokemonAdapter
+            adapter = pokemonAdapter.withLoadStateHeaderAndFooter(
+                header = PokemonPagingLoadAdapter { pokemonAdapter.retry() },
+                footer = PokemonPagingLoadAdapter { pokemonAdapter.retry() }
+            )
 
         }
 
