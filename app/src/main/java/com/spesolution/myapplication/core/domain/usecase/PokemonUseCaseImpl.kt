@@ -5,6 +5,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
+import com.spesolution.myapplication.core.data.datasource.cache.entity.PokemonFavoriteEntity
 import com.spesolution.myapplication.core.data.datasource.cache.entity.PokemonPaginationEntity
 import com.spesolution.myapplication.core.data.datasource.remote.NetworkConstant.NETWORK_PAGE_SIZE
 import com.spesolution.myapplication.core.domain.model.mapToDomainPaging
@@ -40,5 +41,17 @@ class PokemonUseCaseImpl @Inject constructor(private val repository: PokemonRepo
 
     override fun getDetailSpeciesPokemon(url: String): Flow<PokemonDetailSpecies> {
         return repository.getDetailSpeciesPokemon(url)
+    }
+
+    override suspend fun saveFavorite(data: PokemonDetail) {
+        repository.saveFavorite(data)
+    }
+
+    override suspend fun clearFavorite(id: Int) {
+        repository.clearFavorite(id)
+    }
+
+    override fun getListFavorite(): Flow<List<PokemonFavoriteEntity>> {
+        return repository.getListFavorite()
     }
 }

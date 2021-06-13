@@ -1,6 +1,7 @@
 package com.spesolution.myapplication.core.domain.usecase
 
 import androidx.paging.PagingData
+import com.spesolution.myapplication.core.data.datasource.cache.entity.PokemonFavoriteEntity
 import com.spesolution.myapplication.core.domain.response.PokemonDetail
 import com.spesolution.myapplication.core.domain.response.PokemonDetailSpecies
 import com.spesolution.myapplication.core.domain.response.PokemonPaging
@@ -18,4 +19,10 @@ interface PokemonUseCase {
     fun getDetailPokemon(url: String): Flow<PokemonDetail>
 
     fun getDetailSpeciesPokemon(url: String): Flow<PokemonDetailSpecies>
+
+    suspend fun saveFavorite(data: PokemonDetail)
+
+    suspend fun clearFavorite(id: Int)
+
+    fun getListFavorite(): Flow<List<PokemonFavoriteEntity>>
 }

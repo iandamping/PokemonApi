@@ -12,6 +12,7 @@ import com.spesolution.myapplication.core.data.datasource.cache.room.PokemonRemo
 import com.spesolution.myapplication.core.data.datasource.response.PokemonDetailResponse
 import com.spesolution.myapplication.core.domain.model.mapToFavoriteDatabase
 import com.spesolution.myapplication.core.domain.model.mapToPagingDatabase
+import com.spesolution.myapplication.core.domain.response.PokemonDetail
 import com.spesolution.myapplication.core.domain.response.PokemonPaging
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -34,7 +35,7 @@ class PokemonCacheDataSourceImpl @Inject constructor(
        paginationDao.insertPokemon(*data.map { it.mapToPagingDatabase() }.toTypedArray())
     }
 
-    override suspend fun saveFavorite(data: PokemonDetailResponse) {
+    override suspend fun saveFavorite(data: PokemonDetail) {
         favoriteDao.insertPokemon(data.mapToFavoriteDatabase())
     }
 
@@ -46,7 +47,7 @@ class PokemonCacheDataSourceImpl @Inject constructor(
       return paginationDao.loadPokemon()
     }
 
-    override fun getFavorite(): Flow<List<PokemonFavoriteEntity>> {
+    override fun getListFavorite(): Flow<List<PokemonFavoriteEntity>> {
         return favoriteDao.loadPokemon()
     }
 

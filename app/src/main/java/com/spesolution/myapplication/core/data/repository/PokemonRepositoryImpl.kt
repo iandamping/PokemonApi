@@ -8,6 +8,7 @@ import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.spesolution.myapplication.core.data.datasource.PokemonRemoteDataSource
 import com.spesolution.myapplication.core.data.datasource.cache.PokemonCacheDataSource
+import com.spesolution.myapplication.core.data.datasource.cache.entity.PokemonFavoriteEntity
 import com.spesolution.myapplication.core.data.datasource.cache.entity.PokemonPaginationEntity
 import com.spesolution.myapplication.core.data.datasource.cache.entity.PokemonRemoteKeysEntity
 import com.spesolution.myapplication.core.data.datasource.remote.NetworkConstant
@@ -23,6 +24,7 @@ import com.spesolution.myapplication.core.domain.response.PokemonDetailSpecies
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
+import timber.log.Timber
 import java.io.IOException
 import java.io.InvalidObjectException
 import javax.inject.Inject
@@ -44,6 +46,7 @@ class PokemonRepositoryImpl @Inject constructor(
                 loadType: LoadType,
                 state: PagingState<Int, PokemonPaginationEntity>
             ): MediatorResult {
+                Timber.e("state : $loadType")
                 val page = when (loadType) {
                     LoadType.REFRESH -> {
                         val remoteKeys = cacheDataSource.getRemoteKeyClosestToCurrentPosition(state)
@@ -128,6 +131,18 @@ class PokemonRepositoryImpl @Inject constructor(
 
     override fun getCachePagination(): PagingSource<Int, PokemonPaginationEntity> {
         return cacheDataSource.getPagination()
+    }
+
+    override suspend fun saveFavorite(data: PokemonDetail) {
+        cacheDataSource.saveFavorite(data)
+    }
+
+    override suspend fun clearFavorite(id: Int) {
+        cacheDataSource.clearFavorite(id)
+    }
+
+    override fun getListFavorite(): Flow<List<PokemonFavoriteEntity>> {
+       return cacheDataSource.getListFavorite()
     }
 }
 

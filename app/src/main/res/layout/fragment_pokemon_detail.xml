@@ -23,6 +23,16 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/backgrounds/scenic" />
 
+        <ImageView
+            android:id="@+id/ivFavorite"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/ivItemPokemonImage"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_baseline_star_outline_24" />
+
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/linearLayoutCompat"

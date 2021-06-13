@@ -7,6 +7,7 @@ import com.spesolution.myapplication.core.data.datasource.cache.entity.PokemonPa
 import com.spesolution.myapplication.core.data.datasource.cache.entity.PokemonRemoteKeysEntity
 import com.spesolution.myapplication.core.data.datasource.cache.room.PokemonDatabase
 import com.spesolution.myapplication.core.data.datasource.response.PokemonDetailResponse
+import com.spesolution.myapplication.core.domain.response.PokemonDetail
 import com.spesolution.myapplication.core.domain.response.PokemonPaging
 import kotlinx.coroutines.flow.Flow
 
@@ -21,13 +22,13 @@ interface PokemonCacheDataSource {
 
     suspend fun savePagination(data: List<PokemonPaging>)
 
-    suspend fun saveFavorite(data: PokemonDetailResponse)
+    suspend fun saveFavorite(data: PokemonDetail)
 
     suspend fun saveRemoteKeys(data: List<PokemonRemoteKeysEntity>)
 
     fun getPagination(): PagingSource<Int, PokemonPaginationEntity>
 
-    fun getFavorite(): Flow<List<PokemonFavoriteEntity>>
+    fun getListFavorite(): Flow<List<PokemonFavoriteEntity>>
 
     suspend fun getRemoteKeys(data: Long):PokemonRemoteKeysEntity?
 

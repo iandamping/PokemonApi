@@ -4,7 +4,9 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.paging.RemoteMediator
+import com.spesolution.myapplication.core.data.datasource.cache.entity.PokemonFavoriteEntity
 import com.spesolution.myapplication.core.data.datasource.cache.entity.PokemonPaginationEntity
+import com.spesolution.myapplication.core.data.datasource.response.PokemonDetailResponse
 import com.spesolution.myapplication.core.domain.model.DomainResult
 import com.spesolution.myapplication.core.domain.response.PokemonDetail
 import com.spesolution.myapplication.core.domain.response.PokemonDetailSpecies
@@ -26,4 +28,10 @@ interface PokemonRepository {
     fun getDetailSpeciesPokemon(url:String): Flow<PokemonDetailSpecies>
 
     fun getCachePagination(): PagingSource<Int, PokemonPaginationEntity>
+
+    suspend fun saveFavorite(data: PokemonDetail)
+
+    suspend fun clearFavorite(id: Int)
+
+    fun getListFavorite(): Flow<List<PokemonFavoriteEntity>>
 }
