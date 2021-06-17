@@ -14,19 +14,15 @@ import com.spesolution.myapplication.core.data.datasource.cache.entity.PokemonRe
 import com.spesolution.myapplication.core.data.datasource.remote.NetworkConstant
 import com.spesolution.myapplication.core.data.datasource.remote.NetworkConstant.POKEMON_STARTING_OFFSET
 import com.spesolution.myapplication.core.data.model.DataSourceResult
-import com.spesolution.myapplication.core.data.model.Results
 import com.spesolution.myapplication.core.domain.repository.PokemonRepository
 import com.spesolution.myapplication.core.domain.model.mapToDetail
-import com.spesolution.myapplication.core.domain.model.mapToPaging
 import com.spesolution.myapplication.core.domain.model.mapToSpeciesDetail
 import com.spesolution.myapplication.core.domain.response.PokemonDetail
 import com.spesolution.myapplication.core.domain.response.PokemonDetailSpecies
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
-import timber.log.Timber
 import java.io.IOException
-import java.io.InvalidObjectException
 import javax.inject.Inject
 
 /**
@@ -46,7 +42,6 @@ class PokemonRepositoryImpl @Inject constructor(
                 loadType: LoadType,
                 state: PagingState<Int, PokemonPaginationEntity>
             ): MediatorResult {
-                Timber.e("state : $loadType")
                 val page = when (loadType) {
                     LoadType.REFRESH -> {
                         val remoteKeys = cacheDataSource.getRemoteKeyClosestToCurrentPosition(state)
